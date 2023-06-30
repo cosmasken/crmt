@@ -27,7 +27,7 @@ const connect = async() => {
 
       console.log('MongoDB connected')
    } catch (error) {
-      console.log('MongoDB connected failed')
+      console.log('MongoDB connection failed')
    }
 }
 
@@ -40,7 +40,14 @@ app.use("/api/v1/users", userRoute)
 app.use("/api/v1/review", reviewRoute)
 app.use("/api/v1/booking", bookingRoute)
 
-app.listen(port, () => {
+/*app.listen(port, () => {
    connect()
    console.log('server listening on port', port)
+})*/
+
+//Connect to the database before listening
+connect().then(() => {
+   app.listen(port, () => {
+      console.log('server listening on port', port)
+   })
 })
